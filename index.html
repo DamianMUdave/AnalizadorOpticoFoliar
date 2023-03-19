@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="shortcut icon" href="./img/Hoja.svg" type="image/x-icon">
+    <title>Analisis | Log in</title> 
+</head>
+<body>
+    <!--conteiner navbar-->
+    <nav class="navbar navbar-light navbar-expand-lg" style="background-color:#a9e159; ">
+        <img src="./img/HojaR.svg" width="50" height="50" class="d-inline-block align-top" alt="">
+        <a class="navbar-brand" href="index.html">Analizador Folclorico</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
+    <!--end navbar-->
+
+      <!--Log in-->
+      <form action="/login" method="post" class="formulario">
+        
+        <div class="conteiner-all">
+            
+            <div class="login-box">
+                <h1>Iniciar Sesión</h1>
+                <img src="./img/user-circle.svg" class="avatar" alt="Logo">
+
+                <div class="input-container">
+                    <img class="icon" src="./img/carta.svg">
+                    <input id="email" name="email" type="text" placeholder="Correo Electrónico">
+                </div>
+                <div class="input-container">
+                    <img src="./img/key.svg" class="icon">
+                    <input id="pass" name="pass" type="password" placeholder="Contraseña">
+                </div>
+
+                <div class="boton">
+                    <input type="submit" value="Continuar" class="button" onclick="login()" hr>
+                </div>
+                <p>¿No tienes cuenta? Registrate <a class="link" href="">aqui</a></p>
+
+            </div>
+
+        </div>
+      </form>
+    <!--end Log in-->
+
+    <!--footer-->
+    <footer id="footer">
+    <div class="container">
+
+        <div class="copyright">
+            &copy; Copyright <strong><span>AFS</span></strong>. All Rights Reserved
+        </div>
+    </div>
+    <!--end footer-->
+
+    <script src="./js/index.js"></script>
+
+</body>
+</html>
