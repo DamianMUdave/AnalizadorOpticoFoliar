@@ -15,7 +15,7 @@ app.get("/", (req,res) => {
 })
 
 app.get("/sensor", (req,res)=>{
-    res.sendFile(__dirname+"/public/datos.html");
+    res.sendFile(__dirname+"/public/echo.html");
 })
 
 
