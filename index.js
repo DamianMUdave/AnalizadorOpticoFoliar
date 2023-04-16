@@ -23,12 +23,10 @@ function DataPrint(socket){
     if(!clientState == true){
       socket.send("No data for you sorry, check your credentials");
     }else{
-      /* const ip = req.socket.remoteAddress; */
       console.log('A new client Connected!');
       socket.send('Welcome New Client!');
       var today= new Date().toLocaleString('es-Mx', { timeZone: 'America/Mexico_City', });
       console.log(today);
-      /* console.log(ip); */
       socket.emit("date",today);
     }
   }
@@ -38,6 +36,11 @@ io.on('connection', (socket) => {
     clientState = true;
     DataPrint(socket);
     console.log('a user connected');
+    socket.on('event_name', (data) => {
+        var dt = JSON.stringify(data);
+        console.log(`message: ${dt}`);
+        io.emit('infoEsp32',dt);
+    });
     socket.on('sens_Data', (data) => {
         var dt = JSON.stringify(data);
         console.log(`message: ${dt}`);
