@@ -20,9 +20,21 @@ connection.connect((error) => {
     console.log('!DB connection');
 });
 
-
-
-connection.query('USE dron_foliar; SELECT sensor.*, minerales.`N-nitrogeno`, minerales.`P-fosforo`, minerales.`K-potasio`, minerales.`Mg-Magnesio` FROM `sensor`, `minerales` WHERE Valor=138 AND sensor.`ID-Plant` = minerales.`ID-Plant`;', (error, results) => {
+connection.query('USE dron_foliar;'+
+/*'SELECT '+
+    'sensor.*, '+
+    'minerales.`N-nitrogeno`, '+
+    'minerales.`P-fosforo`, '+
+    'minerales.`K-potasio`, '+
+    'minerales.`Mg-Magnesio` '+
+'FROM '+
+    '`sensor`, '+
+    '`minerales` '+
+'WHERE '+
+    'Valor = 138 '+
+    'AND '+
+        'sensor.`ID-Plant` = minerales.`ID-Plant`;'*/
+        'SELECT `ID-Plant` FROM `sensor`;', (error, results) => {
     if (error) {
         console.log('Error en la consulta Codigo: ' + error);
         return;

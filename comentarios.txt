@@ -1,3 +1,6 @@
+Consulta mysql:
+SELECT sensor.*, minerales.`N-nitrogeno`, minerales.`P-fosforo`, minerales.`K-potasio`, minerales.`Mg-Magnesio` FROM `sensor`, `minerales` WHERE Valor = 138 and sensor.`ID-Plant` = minerales.`ID-Plant`;
+
 Elementos eliminados pero que tal vez me sirvan mas adelante
 
 Class main -> echo.html
