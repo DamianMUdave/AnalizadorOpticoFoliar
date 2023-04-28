@@ -8,6 +8,9 @@ const io = new Server(server);
 const port = 4000;
 var clientState = false;
 
+//modulo de conexión a DB
+const connection = require('./database/db');
+
 app.use(express.static(path.join("public")))
 
 app.get("/", (req,res) => {
@@ -54,8 +57,6 @@ io.on('connection', (socket) => {
         io.emit('chat message', msg);
     });
 })
-
-
 
 server.listen(port, () => {
     console.log((new Date()) + `Server is listening on port ${port}\n App listen on http://localhost:${port}`);
