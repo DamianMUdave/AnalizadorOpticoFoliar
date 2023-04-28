@@ -1,0 +1,51 @@
+Elementos eliminados pero que tal vez me sirvan mas adelante
+
+Class main -> echo.html
+        <div class="container-flex">
+			<div class="sensor1 sens card">
+				<img src="./img/nitrogeno.png" class="card-img-top" alt="...">
+				<div class="sensName1 card-title" id="sensName1">Nitrogeno/div>
+				<div class="sensData1 sensData card-text" id="sensData1">Sens1Data</div>
+			</div>
+			<div class="sensor2 sens card">
+				<img src="./img/fosforo.png" class="card-img-top" alt="...">
+				<div class="sensName2 card-title" id="sensName2">Fosforo</div>
+				<div class="sensData2 sensData card-text" id="sensData2">Sens2Data</div>
+			</div>
+			<div class="sensor3 sens card">
+				<img src="./img/potasio.png" class="card-img-top" alt="...">
+				<div class="sensName3 card-title" id="sensNamea3">Potasio</div>
+				<div class="sensData3 sensData card-text" id="sensData3">Sens3Data</div>
+			</div>
+			<div class="sensor4 sens card">
+				<img src="./img/magnesio.png" class="card-img-top" alt="...">
+				<div class="sensName4 card-title" id="sensName4">Magnesio</div>
+				<div class="sensData4 sensData card-text" id="sensData4">Sens4Data</div>
+			</div>
+			<div class="sensor5 sens card">
+				<img src="" class="card-img-top" alt="...">
+				<div class="sensName5 card-title" id="sensName5">ID</div>
+				<div class="sensData5 sensData card-text" id="sensData5">Sens5Data</div>
+			</div>
+			<div class="sensor6 sens card">
+				<img src="" class="card-img-top" alt="...">
+				<div class="sensName6 card-title" id="sensName6">Lab</div>
+				<div class="sensData6 sensData card-text" id="sensData6">Sens6Data</div>
+			</div>
+		</div>
+
+Variables -> echo.js
+var sensData1 = document.getElementById('sensData1');
+var sensData2 = document.getElementById('sensData2');
+var sensData3 = document.getElementById('sensData3');
+var sensData4 = document.getElementById('sensData4');
+var sensData5 = document.getElementById('sensData5');
+var sensData6 = document.getElementById('sensData6');
+
+funcion jsonobj -> echo.js
+    sensData1.innerHTML = myObj.sens1;
+    sensData2.innerHTML = myObj.sens2;
+    sensData3.innerHTML = myObj.sens3;
+    sensData4.innerHTML = myObj.sens4;
+    sensData5.innerHTML = myObj.sens5;
+    sensData6.innerHTML = myObj.sens6;
