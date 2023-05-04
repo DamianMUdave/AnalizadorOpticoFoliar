@@ -18,7 +18,7 @@ var socket = io();
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
   });
-
+/*
 //confirmacion de login
 function login() { //se ejecuta cuando se presiona el boton de login
 
@@ -29,10 +29,10 @@ function login() { //se ejecuta cuando se presiona el boton de login
 
   if(correo == "admin@hotmail.com" && Contraseña == "12345678"){ //se comprueba si el correo y la contraseña son correctos
       location.href = "echo.html";
-      alert("Iniciaste Sesión");
+      //alert("Iniciaste Sesión");
   }else{ //se comprueba si el correo y la contraseña son incorrectos
       location.href = "index.html";
       alert("Usuario o contraseña incorrectos");
   }
   
-  }
+}*/

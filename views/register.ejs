@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/index.css">
+    <title>AFS | LogIn</title>
+</head>
+<body>
+	<form action="/register" method="post" class="formulario">
+        <div class="conteiner-all">
+            <div class="login-box">
+                <h1>Iniciar Sesión</h1>
+                <img src="./img/user-circle.svg" class="avatar" alt="Logo">
+
+                <div class="input-container">
+                    <img class="icon " src="./img/">
+                    <input id="name" name="name" type="text" placeholder="Nombre" required>
+                </div>
+                <div class="input-container">
+                    <img class="icon" src="./img/carta.svg">
+                    <input id="email" name="email" type="text" placeholder="Correo Electrónico" required>
+                </div>
+                <div class="input-container">
+                    <img src="./img/key.svg" class="icon">
+                    <input id="pass" name="pass" type="password" placeholder="Contraseña" required>
+                </div>
+
+                <div class="boton">
+                    <input type="submit" value="Continuar" class="button" hr>
+                </div>
+                <p>¿Ya tienes cuenta? Ingresa <a class="link" href=".">aqui</a></p>
+            </div>
+        </div>
+    </form>
+
+    <ul id="messages"></ul>
+
+    <!--sweetalert para los estilos de los mensajes-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!--Mostrando la alerta cuando se realice un registro-->
+    <!--Si la alerta es diferente a "undefined"-->
+    <% if(typeof alert != 'undefined') { %>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: <%= showconfirmButton %>,
+                timer: <%= timer %>
+            }).then(()=> {
+                window.location= '/<%= ruta %>';
+            })
+        </script>
+    <% } %>
+    <!--Asi funciona bien, con todo y errores-->
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src=""></script>
+</html>

@@ -19,38 +19,4 @@ connection.connect((error) => {
     }
     console.log('!DB connection');
 });
-
-connection.query('USE dron_foliar;'+
-/*'SELECT '+
-    'sensor.*, '+
-    'minerales.`N-nitrogeno`, '+
-    'minerales.`P-fosforo`, '+
-    'minerales.`K-potasio`, '+
-    'minerales.`Mg-Magnesio` '+
-'FROM '+
-    '`sensor`, '+
-    '`minerales` '+
-'WHERE '+
-    'Valor = 138 '+
-    'AND '+
-        'sensor.`ID-Plant` = minerales.`ID-Plant`;'*/
-        'SELECT `ID-Plant` FROM `sensor`;', (error, results) => {
-    if (error) {
-        console.log('Error en la consulta Codigo: ' + error);
-        return;
-    }
-
-    // Mostramos los datos en la tabla HTML
-    $.each(results, function (index, registro) {
-        const fila = $('<tr>');
-        fila.append($('<td>').text(registro.ID - Plant));
-        fila.append($('<td>').text(registro.Name - Plant));
-        fila.append($('<td>').text(registro.Valor));
-        fila.append($('<td>').text(registro.N - nitrogeno));
-        fila.append($('<td>').text(registro.P - fosforo));
-        fila.append($('<td>').text(registro.K - potasio));
-        fila.append($('<td>').text(registro.Mg - Magnesio));
-        $('#datos').append(fila);
-    });
-});
 module.exports = connection;
