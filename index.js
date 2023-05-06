@@ -1,6 +1,6 @@
 const http = require('http');
 const express = require('express');
-const { Server } = require("socket.io");
+const {Server} = require("socket.io");
 const path = require('path');
 const app = express();
 const server = http.createServer(app);
@@ -9,12 +9,16 @@ const port = 4000;
 var clientState = false;
 
 //Para capturar los datos del formulario sin errores
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({
+    extended: false
+}));
 app.use(express.json());
 
 //Invocamos dotenv
 const dotenv = require('dotenv');
-dotenv.config({path:'./env/.env'});
+dotenv.config({
+    path: './env/.env'
+});
 
 //Motor de plantillas ejs
 app.set('view engine', 'ejs');
@@ -33,26 +37,12 @@ app.use(session({
 //modulo de conexión a DB
 const connection = require('./database/db');
 
+//rutas
+const routes = require('./public/js/routes');
+
 app.use(express.static(path.join("public")))
 
-//login (primero en aparecer al ingresar a la pagina)
-app.get("/", (req,res) => {
-    //                        index.html
-    //res.sendFile(__dirname + "/views/login")
-    res.render('index');
-})
-//dashboard, donde se enseñaran los datos
-//"/sensor"
-app.get("/dashboard", (req,res)=>{
-    //dashboard             /public/echo.html
-    //res.sendFile(__dirname+"/views/dashboard");
-    res.render('dashboard');
-})
-//registro
-app.get("/register", (req,res)=>{
-    //res.sendFile(__dirname+"/views/register");
-    res.render('register');
-})
+app.use('/', routes);
 
 //Registración
 app.post('/register', async (req, res) => {
@@ -61,19 +51,48 @@ app.post('/register', async (req, res) => {
     const pass = req.body.pass;
     //Encryptacion
     let pH = await bcryptjs.hash(pass, 8);
-    //Consulta
-    connection.query('INSERT INTO usuarios SET ?', {Nombre:name, Correo:email, Password:pH}, async(error, result) => {
-        if (error) {
-            console.log(error);
+    // Verificar que la contraseña tenga al menos 8 caracteres
+    if (pass.length < 8) {
+        res.render('register', {
+            alert: true,
+            alertTitle: 'Registro',
+            alertMessage: 'La contraseña debe tener al menos 8 caracteres',
+            alertIcon: 'error',
+            showConfirmButton: true,
+            timer: false,
+            ruta: 'register'
+        })
+        return;
+    }
+    //Verifica si el correo ya existe para realizar el registro
+    connection.query('SELECT * FROM usuarios WHERE Correo = ?', [email], async (error, results) => {
+        if (!results || results.length == 0) {
+            //Registro
+            connection.query('INSERT INTO usuarios SET ?', {Nombre: name, Correo: email, Password: pH}, async (error, result) => {
+                if (error) {
+                    console.log(error);
+                } else {
+                    res.render('register', {
+                        alert: true,
+                        alertTitle: "Registro",
+                        alertMessage: "Registracion exitosa",
+                        alertIcon: "success",
+                        showConfirmButton: false,
+                        timer: 1500,
+                        ruta: ''
+                    })
+                }
+            })
         }else{
+            //El correo electrónico ya existe en la base de datos
             res.render('register',{
                 alert: true,
-                alertTitle: "Registration",
-                alertMessage: "Registracion exitosa",
-                alertIcon: "success",
-                showconfirmButton: false,
-                timer: 1500,
-                ruta: ''
+                alertTitle: 'Registro',
+                alertMessage: 'El correo electrónico ya está registrado',
+                alertIcon: 'error',
+                showConfirmButton: true,
+                timer: false,
+                ruta: 'register'
             })
         }
     })
@@ -87,12 +106,12 @@ app.post('/auth', async (req, res) => {
     //Desencryptacion
     let pH = await bcryptjs.hash(pass, 8);
     //Consulta
-    if(email && pass) {
-        connection.query ('SELECT * FROM usuarios WHERE Correo = ?', [email], async (error, results) => {
-            console.log("Contraseña: "+pass);
-            console.log("Encriptada: "+results[0].Password);
-            console.log("PH: "+pH);
-            if(!results || results.length == 0 || !(await bcryptjs.compare(pass, results[0].Password))){
+    if (email && pass) {
+        connection.query('SELECT * FROM usuarios WHERE Correo = ?', [email], async (error, results) => {
+            console.log("Contraseña: " + pass);
+            console.log("Encriptada: " + results[0].Password);
+            console.log("PH: " + pH);
+            if (!results || results.length == 0 || !(await bcryptjs.compare(pass, results[0].Password))) {
                 //Datos incorrectos
                 console.log(await bcryptjs.compare(pass, results[0].Password));
                 res.render('index', {
@@ -104,7 +123,7 @@ app.post('/auth', async (req, res) => {
                     timer: false,
                     ruta: ''
                 })
-            }else{
+            } else {
                 //Datos correctos
                 req.session.loggedin = true;
                 req.session.name = results[0].Nombre;
@@ -119,7 +138,7 @@ app.post('/auth', async (req, res) => {
                 })
             }
         })
-    }else{
+    } else {
         //res.send('Por favor ingrese usuario y/o contraseña');
         res.render('index', {
             alert: true,
@@ -133,15 +152,17 @@ app.post('/auth', async (req, res) => {
     }
 })
 
-function DataPrint(socket){
-    if(!clientState == true){
-      socket.send("No data for you sorry, check your credentials");
-    }else{
-      console.log('A new client Connected!');
-      socket.send('Welcome New Client!');
-      var today= new Date().toLocaleString('es-Mx', { timeZone: 'America/Mexico_City', });
-      console.log(today);
-      socket.emit("date",today);
+function DataPrint(socket) {
+    if (!clientState == true) {
+        socket.send("No data for you sorry, check your credentials");
+    } else {
+        console.log('A new client Connected!');
+        socket.send('Welcome New Client!');
+        var today = new Date().toLocaleString('es-Mx', {
+            timeZone: 'America/Mexico_City',
+        });
+        console.log(today);
+        socket.emit("date", today);
     }
 }
 
@@ -152,12 +173,12 @@ io.on('connection', (socket) => {
     socket.on('event_name', (data) => {
         var dt = JSON.stringify(data);
         console.log(`message: ${dt}`);
-        io.emit('infoEsp32',dt);
+        io.emit('infoEsp32', dt);
     });
     socket.on('sens_Data', (data) => {
         var dt = JSON.stringify(data);
         console.log(`message: ${dt}`);
-        io.emit('sensClientData',dt);
+        io.emit('sensClientData', dt);
     });
     socket.on('disconnect', () => {
         clientState = false;
@@ -170,4 +191,4 @@ io.on('connection', (socket) => {
 
 server.listen(port, () => {
     console.log((new Date()) + `Server is listening on port ${port}\n App listen on http://localhost:${port}`);
-}) 
+})

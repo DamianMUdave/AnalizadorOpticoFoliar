@@ -53,11 +53,11 @@ funcion jsonobj -> echo.js
     sensData5.innerHTML = myObj.sens5;
     sensData6.innerHTML = myObj.sens6;
 
-que no se pueda ingresar el mismo correo
-longitud de contraseña alfanumerico (minimo 8)
+que no se pueda ingresar el mismo correo X
+longitud de contraseña alfanumerico (minimo 8) X
 capturar el dato del esp
 guardar el dato con el nombre de la planta
-comparar los datos de entrada con los datos de sql
+comparar los datos de entrada del esp con los datos de sql
 espectro de los datos del esp
-separar las rutas en un archivo a parte
+separar las rutas en un archivo a parte X
 CRUD = crear, actualizar y borrar variables
