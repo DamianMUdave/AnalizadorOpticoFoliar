@@ -1,23 +1,27 @@
 const express = require('express');
 const app = express.Router();
+const results = require('./public/js/echo').results;
 
-//login (primero en aparecer al ingresar a la pagina)
+//login (index)
 app.get("/", (req, res) => {
-    //                        index.html
+    //                          index.html
     //res.sendFile(__dirname + "/views/login")
     res.render('index');
 })
+
 //dashboard, donde se enseñaran los datos
 //"/sensor"
 app.get("/dashboard", (req, res) => {
-    //dashboard             /public/echo.html
+    //dashboard               /public/echo.html
     //res.sendFile(__dirname+"/views/dashboard");
-    res.render('dashboard');
+    res.render('dashboard', {data: results});
 })
+
 //registro
 app.get("/register", (req, res) => {
     //res.sendFile(__dirname+"/views/register");
     res.render('register');
 })
 
+//Exportar el modulo
 module.exports = app;

@@ -47,15 +47,28 @@
 				<div class="sensData1 sensData card-text" id="sensData1">Sens1Data</div>
 			</div>
 	    </div>
+		<!--Datos de mysql-->
+		<% data.forEach(function(row) { %>
+			<p>Planta: <%= row.Name-Plant %></p>
+			<p>Valor: <%= row.Valor %></p>
+			<p>Nitrogeno: <%= row.N-nitrogeno %></p>
+			<p>Fosforo: <%= row.P-fosforo %></p>
+			<p>Potasio: <%= row.K-potasio %></p>
+			<p>Magnesio: <%= row.Mg-Magnesio %></p>
+			<hr>
+		<% }); %>
+		<!--End de los datos-->
 	</main>
+	
 	<!--footer-->
 	<footer id="footer2">
 		<div class="container">
-			<div class="copyright">
-				&copy; Copyright <strong><span>AFS</span></strong>. All Rights Reserved
-			</div>
+			<div class="copyright">&copy; Copyright <strong><span>AFS</span></strong>. All Rights Reserved</div>
 		</div>
 	<!--end footer-->
+
+	<ul id="messages"></ul>
+
 </body>
 <script src="/socket.io/socket.io.js"></script>
 <script src="./js/echo.js"></script>

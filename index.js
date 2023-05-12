@@ -42,6 +42,7 @@ const routes = require('./public/js/routes');
 
 app.use(express.static(path.join("public")))
 
+//Rutas
 app.use('/', routes);
 
 //Registración
@@ -67,15 +68,16 @@ app.post('/register', async (req, res) => {
     //Verifica si el correo ya existe para realizar el registro
     connection.query('SELECT * FROM usuarios WHERE Correo = ?', [email], async (error, results) => {
         if (!results || results.length == 0) {
-            //Registro
+            //Si no encuentra resultados registra al usuario
             connection.query('INSERT INTO usuarios SET ?', {Nombre: name, Correo: email, Password: pH}, async (error, result) => {
                 if (error) {
                     console.log(error);
                 } else {
+                    //Alerta
                     res.render('register', {
                         alert: true,
                         alertTitle: "Registro",
-                        alertMessage: "Registracion exitosa",
+                        alertMessage: "Registro exitoso",
                         alertIcon: "success",
                         showConfirmButton: false,
                         timer: 1500,
@@ -85,6 +87,7 @@ app.post('/register', async (req, res) => {
             })
         }else{
             //El correo electrónico ya existe en la base de datos
+            //Alerta
             res.render('register',{
                 alert: true,
                 alertTitle: 'Registro',
@@ -113,7 +116,10 @@ app.post('/auth', async (req, res) => {
             console.log("PH: " + pH);
             if (!results || results.length == 0 || !(await bcryptjs.compare(pass, results[0].Password))) {
                 //Datos incorrectos
+                /*======================================================================*/
                 console.log(await bcryptjs.compare(pass, results[0].Password));
+                /*======================================================================*/
+                //Alerta
                 res.render('index', {
                     alert: true,
                     alertTitle: "Error",
@@ -127,6 +133,7 @@ app.post('/auth', async (req, res) => {
                 //Datos correctos
                 req.session.loggedin = true;
                 req.session.name = results[0].Nombre;
+                //Alerta
                 res.render('index', {
                     alert: true,
                     alertTitle: "LOGEADO",
@@ -139,7 +146,7 @@ app.post('/auth', async (req, res) => {
             }
         })
     } else {
-        //res.send('Por favor ingrese usuario y/o contraseña');
+        //Alerta
         res.render('index', {
             alert: true,
             alertTitle: "Advertencia",
@@ -152,6 +159,7 @@ app.post('/auth', async (req, res) => {
     }
 })
 
+/*======================================================================*/
 function DataPrint(socket) {
     if (!clientState == true) {
         socket.send("No data for you sorry, check your credentials");
@@ -170,25 +178,30 @@ io.on('connection', (socket) => {
     clientState = true;
     DataPrint(socket);
     console.log('a user connected');
+    //Informacion sobre el ESP32
     socket.on('event_name', (data) => {
         var dt = JSON.stringify(data);
         console.log(`message: ${dt}`);
         io.emit('infoEsp32', dt);
     });
+    //Datos recibidos del sensor
     socket.on('sens_Data', (data) => {
         var dt = JSON.stringify(data);
         console.log(`message: ${dt}`);
         io.emit('sensClientData', dt);
     });
+    //Cuando se descoencta el usuario de la pagina
     socket.on('disconnect', () => {
         clientState = false;
         console.log('user disconnect');
     })
+    //mensage
     socket.on('chat message', (msg) => {
         io.emit('chat message', msg);
     });
 })
 
+//Muestra que el server esta abierto y el puerto en el que se abre
 server.listen(port, () => {
     console.log((new Date()) + `Server is listening on port ${port}\n App listen on http://localhost:${port}`);
 })

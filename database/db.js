@@ -19,4 +19,6 @@ connection.connect((error) => {
     }
     console.log('!DB connection');
 });
+
+//Exportamos el modulo
 module.exports = connection;
