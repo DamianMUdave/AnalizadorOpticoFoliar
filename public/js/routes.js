@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express.Router();
-const results = require('./public/js/echo').results;
+const result = require('./consulta');
 
 //login (index)
 app.get("/", (req, res) => {
@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 app.get("/dashboard", (req, res) => {
     //dashboard               /public/echo.html
     //res.sendFile(__dirname+"/views/dashboard");
-    res.render('dashboard', {data: results});
+    res.render('dashboard', {data: result});
 })
 
 //registro

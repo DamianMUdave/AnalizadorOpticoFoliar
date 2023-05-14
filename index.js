@@ -37,7 +37,7 @@ app.use(session({
 //modulo de conexión a DB
 const connection = require('./database/db');
 
-//rutas
+//Exporta las rutas rutas
 const routes = require('./public/js/routes');
 
 app.use(express.static(path.join("public")))
@@ -114,6 +114,7 @@ app.post('/auth', async (req, res) => {
             console.log("Contraseña: " + pass);
             console.log("Encriptada: " + results[0].Password);
             console.log("PH: " + pH);
+            console.log(" ");
             if (!results || results.length == 0 || !(await bcryptjs.compare(pass, results[0].Password))) {
                 //Datos incorrectos
                 /*======================================================================*/
@@ -189,6 +190,7 @@ io.on('connection', (socket) => {
         var dt = JSON.stringify(data);
         console.log(`message: ${dt}`);
         io.emit('sensClientData', dt);
+        //Tabla(data);
     });
     //Cuando se descoencta el usuario de la pagina
     socket.on('disconnect', () => {
@@ -205,3 +207,28 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
     console.log((new Date()) + `Server is listening on port ${port}\n App listen on http://localhost:${port}`);
 })
+
+/*======================================================================
+//modulo de conexión a DB
+var result = '';
+function Tabla(obj){
+    var myObj = JSON.parse(obj);
+    console.log(myObj);
+    //sensor = myObj.sens1;
+    sensor = 150;
+    console.log(sensor);
+    connection.query('SELECT '+
+    'sensor.*, minerales.`N-nitrogeno`, minerales.`P-fosforo`, minerales.`K-potasio`, minerales.`Mg-Magnesio` '+
+    'FROM '+
+    '`sensor`, `minerales` '+
+    'WHERE '+
+    'Valor = ? and sensor.`ID-Plant` = minerales.`ID-Plant`', [sensor], async (error, results) => {
+        if(error){
+            console.log(error);
+        }else{
+            result = results;
+        }
+    })
+}*/
+/*
+module.exports = result;*/

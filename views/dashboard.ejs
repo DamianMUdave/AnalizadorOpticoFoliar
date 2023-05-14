@@ -7,10 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta author="OGMD" date="28/08/22">
 	<link rel="stylesheet" href="./css/style.css">
-	<meta name="viewport"
-		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-		integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
 	<link rel="shortcut icon" href="/img/Hoja.svg" type="image/x-icon">
 	<title>AFS | Sensor</title>
 </head>
@@ -61,18 +59,26 @@
 			</div>
 	    </div>
 		<!--Datos de mysql-->
-		<% data.forEach(function(row) { %>
-			<p>Planta: <%= row.Name-Plant %></p>
-			<p>Valor: <%= row.Valor %></p>
-			<p>Nitrogeno: <%= row.N-nitrogeno %></p>
-			<p>Fosforo: <%= row.P-fosforo %></p>
-			<p>Potasio: <%= row.K-potasio %></p>
-			<p>Magnesio: <%= row.Mg-Magnesio %></p>
-			<hr>
-		<% }); %>
+		<% if (data.length > 0) { %>
+			<% data.forEach(function(row) { %>
+				<p>Planta: <%= row.Name-Plant %></p>
+				<p>Valor: <%= row.Valor %></p>
+				<p>Nitrogeno: <%= row.N-nitrogeno %></p>
+				<p>Fosforo: <%= row.P-fosforo %></p>
+				<p>Potasio: <%= row.K-potasio %></p>
+				<p>Magnesio: <%= row.Mg-Magnesio %></p>
+				<hr>
+			<% }); %>
+		<% } else { %>
+			<p>No hay datos disponibles</p>
+		<% } %>
 		<!--End de los datos-->
+		<div class="map">
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28782.13816600592!2d-103.41003248916013!3d25.612648599999986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x868fd12c7fd02ab1%3A0x419a63853144a5d2!2sInstituto%20Tecnol%C3%B3gico%20de%20Torre%C3%B3n!5e0!3m2!1ses-419!2smx!4v1684007224454!5m2!1ses-419!2smx" 
+			width="70%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+		</div>
 	</main>
-	
+
 	<!--footer-->
 	<footer id="footer2">
 		<div class="container">
