@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 const port = 4000;
 var clientState = false;
-
+//const result = require('./public/js/consulta');
 //Para capturar los datos del formulario sin errores
 app.use(express.urlencoded({
     extended: false
@@ -38,7 +38,8 @@ app.use(session({
 const connection = require('./database/db');
 
 //Exporta las rutas rutas
-const routes = require('./public/js/routes');
+const routes = require('./routes/routes');
+//const sql = require('./database/consulta');
 
 app.use(express.static(path.join("public")))
 
@@ -111,10 +112,11 @@ app.post('/auth', async (req, res) => {
     //Consulta
     if (email && pass) {
         connection.query('SELECT * FROM usuarios WHERE Correo = ?', [email], async (error, results) => {
+            /*console.log(" ");
             console.log("Contraseña: " + pass);
             console.log("Encriptada: " + results[0].Password);
             console.log("PH: " + pH);
-            console.log(" ");
+            console.log(" ");*/
             if (!results || results.length == 0 || !(await bcryptjs.compare(pass, results[0].Password))) {
                 //Datos incorrectos
                 /*======================================================================*/
@@ -190,7 +192,6 @@ io.on('connection', (socket) => {
         var dt = JSON.stringify(data);
         console.log(`message: ${dt}`);
         io.emit('sensClientData', dt);
-        //Tabla(data);
     });
     //Cuando se descoencta el usuario de la pagina
     socket.on('disconnect', () => {
@@ -207,28 +208,3 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
     console.log((new Date()) + `Server is listening on port ${port}\n App listen on http://localhost:${port}`);
 })
-
-/*======================================================================
-//modulo de conexión a DB
-var result = '';
-function Tabla(obj){
-    var myObj = JSON.parse(obj);
-    console.log(myObj);
-    //sensor = myObj.sens1;
-    sensor = 150;
-    console.log(sensor);
-    connection.query('SELECT '+
-    'sensor.*, minerales.`N-nitrogeno`, minerales.`P-fosforo`, minerales.`K-potasio`, minerales.`Mg-Magnesio` '+
-    'FROM '+
-    '`sensor`, `minerales` '+
-    'WHERE '+
-    'Valor = ? and sensor.`ID-Plant` = minerales.`ID-Plant`', [sensor], async (error, results) => {
-        if(error){
-            console.log(error);
-        }else{
-            result = results;
-        }
-    })
-}*/
-/*
-module.exports = result;*/

@@ -58,24 +58,42 @@
 				<div class="sensData3 sensData card-text" id="sensData3">Sens3Data</div>
 			</div>
 	    </div>
-		<!--Datos de mysql-->
-		<% if (data.length > 0) { %>
-			<% data.forEach(function(row) { %>
-				<p>Planta: <%= row.Name-Plant %></p>
-				<p>Valor: <%= row.Valor %></p>
-				<p>Nitrogeno: <%= row.N-nitrogeno %></p>
-				<p>Fosforo: <%= row.P-fosforo %></p>
-				<p>Potasio: <%= row.K-potasio %></p>
-				<p>Magnesio: <%= row.Mg-Magnesio %></p>
-				<hr>
-			<% }); %>
-		<% } else { %>
-			<p>No hay datos disponibles</p>
-		<% } %>
-		<!--End de los datos-->
+
+		<!--<div class="consulta">
+			<div class="nombre">
+				<h2 id="nombre">Nombre: </h2><p id="name">nombre</p>
+				<h2 id="valor">Valor: </h2><p id="value">valor</p>
+				<h2 id="N">Nitrogeno: </h2><p id="nitrogeno">N</p>
+				<h2 id="P">Fosforo: </h2><p id="fosforo">P</p>
+				<h2 id="k">Potasio: </h2><p id="potasio">K</p>
+				<h2 id="Mg">Magnesio: </h2><p id="magnesio">Mg</p>
+			</div>
+		</div>-->
+		<div class="consulta">
+			<% if (results.length > 0) { %>
+				<% results.forEach(function(row) { %>
+					<p>Planta: <%= row.NamePlant %></p>
+					<p>Valor: <%= row.Valor %></p>
+					<p>Nitrogeno: <%= row.Nnitrogeno %></p>
+					<p>Fosforo: <%= row.Pfosforo %></p>
+					<p>Potasio: <%= row.Kpotasio %></p>
+					<p>Magnesio: <%= row.MgMagnesio %></p>
+					<hr>
+				<% }); %>
+			<% } else { %>
+				<p>No hay datos disponibles</p>
+			<% } %>
+		</div>
+		<!--
 		<div class="map">
 			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28782.13816600592!2d-103.41003248916013!3d25.612648599999986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x868fd12c7fd02ab1%3A0x419a63853144a5d2!2sInstituto%20Tecnol%C3%B3gico%20de%20Torre%C3%B3n!5e0!3m2!1ses-419!2smx!4v1684007224454!5m2!1ses-419!2smx" 
 			width="70%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+		</div>
+		-->
+		<div class="container-flex">
+			<div class="sens card">
+				<img src="" class="card-img-top apiimg" alt="...">
+			</div>
 		</div>
 	</main>
 
@@ -84,11 +102,13 @@
 		<div class="container">
 			<div class="copyright">&copy; Copyright <strong><span>AFS</span></strong>. All Rights Reserved</div>
 		</div>
+	</footer>
 	<!--end footer-->
 
-	<ul id="messages"></ul>
+	<!--<ul id="messages"></ul>-->
 
 </body>
 <script src="/socket.io/socket.io.js"></script>
 <script src="./js/echo.js"></script>
+<script src="../database/consulta.js"></script>
 </html>

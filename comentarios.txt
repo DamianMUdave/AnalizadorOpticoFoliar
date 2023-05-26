@@ -144,3 +144,23 @@ connect.query('SELECT sensor.*, minerales.`N-nitrogeno`, minerales.`P-fosforo`, 
 });
 
 connection.end();*/
+----------------------------------------------------------------------
+	dashboard.ejs
+----------------------------------------------------------------------
+<!--Datos de mysql
+		<div class="consulta">
+			<% if (data.length > 0) { %>
+				<% data.forEach(function(row) { %>
+					<p>Planta: <%= row.Name-Plant %></p>
+					<p>Valor: <%= row.Valor %></p>
+					<p>Nitrogeno: <%= row.N-nitrogeno %></p>
+					<p>Fosforo: <%= row.P-fosforo %></p>
+					<p>Potasio: <%= row.K-potasio %></p>
+					<p>Magnesio: <%= row.Mg-Magnesio %></p>
+					<hr>
+				<% }); %>
+			<% } else { %>
+				<p>No hay datos disponibles</p>
+			<% } %>
+		</div>
+		End de los datos-->
