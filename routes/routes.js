@@ -40,7 +40,7 @@ app.get("/dashboard", (req, res) => {
     'FROM '+
     '`sensor`, `minerales` '+
     'WHERE '+
-    'Valor = 138 and sensor.`IDPlant` = minerales.`IDPlant`', /*[sensor],*/ async (error, results) => {
+    'Valor = 60 and sensor.`IDPlant` = minerales.`IDPlant`', /*[sensor],*/ async (error, results) => {
         if(error){
             console.log(error);
         }else{

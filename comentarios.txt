@@ -9,7 +9,19 @@ npm i express express-session mysql ejs dotenv bcryptjs
 ======================================================================
 Consulta mysql
 ----------------------------------------------------------------------
-SELECT sensor.*, minerales.`N-nitrogeno`, minerales.`P-fosforo`, minerales.`K-potasio`, minerales.`Mg-Magnesio` FROM `sensor`, `minerales` WHERE Valor = 138 and sensor.`ID-Plant` = minerales.`ID-Plant`;
+SELECT sensor.*, minerales.`Nnitrogeno`, minerales.`Pfosforo`, minerales.`Kpotasio`, minerales.`MgMagnesio` FROM `sensor`, `minerales` WHERE Valor = 138 and sensor.`IDPlant` = minerales.`IDPlant`;
+
+======================================================================
+Cosas que faltan
+----------------------------------------------------------------------
+que no se pueda ingresar el mismo correo X
+longitud de contraseña alfanumerico (minimo 8) X
+capturar el dato del esp
+guardar el dato con el nombre de la planta
+comparar los datos de entrada del esp con los datos de sql
+espectro de los datos del esp
+separar las rutas en un archivo a parte X
+CRUD = crear, actualizar y borrar variables
 
 ======================================================================
 Elementos eliminados pero que tal vez me sirvan mas adelante
@@ -48,7 +60,7 @@ Class main -> echo.html
 			</div>
 		</div>
 
-======================================================================
+----------------------------------------------------------------------
 Variables -> echo.js
 ----------------------------------------------------------------------
 var m1 = document.getElementById('m1')
@@ -59,24 +71,12 @@ var sensData4 = document.getElementById('sensData4');
 var sensData5 = document.getElementById('sensData5');
 var sensData6 = document.getElementById('sensData6');
 
-======================================================================
+----------------------------------------------------------------------
 funcion jsonobj -> echo.js
 ----------------------------------------------------------------------
     sensData4.innerHTML = myObj.sens4;
     sensData5.innerHTML = myObj.sens5;
     sensData6.innerHTML = myObj.sens6;
-
-======================================================================
-Cosas que faltan
-----------------------------------------------------------------------
-que no se pueda ingresar el mismo correo X
-longitud de contraseña alfanumerico (minimo 8) X
-capturar el dato del esp
-guardar el dato con el nombre de la planta
-comparar los datos de entrada del esp con los datos de sql
-espectro de los datos del esp
-separar las rutas en un archivo a parte X
-CRUD = crear, actualizar y borrar variables
 
 ======================================================================
 Elementos que no funcionaron
@@ -144,6 +144,53 @@ connect.query('SELECT sensor.*, minerales.`N-nitrogeno`, minerales.`P-fosforo`, 
 });
 
 connection.end();*/
+
+======================================================================
+Forma en la que si funcionó la consulta SQL y mandar los resultados
+----------------------------------------------------------------------
+	routes.js
+----------------------------------------------------------------------
+//"/sensor"
+app.get("/dashboard", (req, res) => {
+    //dashboard               /public/echo.html
+    //res.sendFile(__dirname+"/views/dashboard");
+    //res.render('dashboard');
+    io.on('connection', (socket) => {
+        clientState = true;
+        DataPrint(socket);
+        //Datos recibidos del sensor
+        socket.on('sens_Data', (data) => {
+            var dt = JSON.stringify(data);
+            //console.log(`message: ${dt}`);
+            //io.emit('sensClientData', dt);
+            console.log(dt);
+            //sensor = myObj.sens1;
+            sensor = 138;
+            console.log("Valor del sensor en la coneccion: "+sensor);
+        });
+    })
+
+    connection.query('SELECT '+
+    'sensor.*, minerales.`Nnitrogeno`, minerales.`Pfosforo`, minerales.`Kpotasio`, minerales.`MgMagnesio` '+
+    'FROM '+
+    '`sensor`, `minerales` '+
+    'WHERE '+
+    'Valor = 138 and sensor.`IDPlant` = minerales.`IDPlant`', /*[sensor],*/ async (error, results) => {
+        if(error){
+            console.log(error);
+        }else{
+            //result = results;
+            console.log("");
+            console.log("Resultados de la consulta:");
+            console.log(results);
+            res.render('dashboard', {results});
+        }
+    });
+    
+})
+
+======================================================================
+Visualización de los datos consultados
 ----------------------------------------------------------------------
 	dashboard.ejs
 ----------------------------------------------------------------------
@@ -164,3 +211,21 @@ connection.end();*/
 			<% } %>
 		</div>
 		End de los datos-->
+----------------------------------------------------------------------
+	dashboard.ejs - muestra la consulta 2.0
+----------------------------------------------------------------------
+	<div class="consulta">
+			<% if (results.length > 0) { %>
+				<% results.forEach(function(row) { %>
+					<p>Planta: <%= row.NamePlant %></p>
+					<p>Valor: <%= row.Valor %></p>
+					<p>Nitrogeno: <%= row.Nnitrogeno %></p>
+					<p>Fosforo: <%= row.Pfosforo %></p>
+					<p>Potasio: <%= row.Kpotasio %></p>
+					<p>Magnesio: <%= row.MgMagnesio %></p>
+					<hr>
+				<% }); %>
+			<% } else { %>
+				<p>No hay datos disponibles</p>
+			<% } %>
+		</div>

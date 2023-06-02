@@ -218,7 +218,45 @@ li {
 /*end mapa*/
 
 /*consulta sql*/
-.consulta{
-    padding-top: 100px;
+.tabla{
+    padding-top: 50px;
+    
+}
+
+.sql-table{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1em;
+    min-width: 450px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); 
+}
+
+.sql-table thead tr{
+    background-color: #a9e159;
+    color: #ffffff;
+    text-align: middle;
+}
+
+.sql-table th, .sql-table td{
+    padding: 12px 15px;
+}
+
+.sql-table tbody tr{
+    border-bottom: 1px solid #dddddd;
+}
+
+.sql-table tbody tr:nth-of-type(even){
+    background-color: #f3f3f3;
+}
+
+.sql-table tbody tr:last-of-type{
+    border-bottom: 2px solid #009879;
 }
 /*end consulta*/
+
+/*IMG API*/
+.container_img{
+    text-align: center;
+    padding-top: 100px;
+}
+/*end img api*/

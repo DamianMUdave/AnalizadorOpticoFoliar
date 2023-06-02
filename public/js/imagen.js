@@ -1,4 +1,4 @@
-const apiUrl = 'https://jsonplaceholder.typicode.com/photos'; // URL de la imagen en la API
+const apiUrl = 'https://jsonplaceholder.typicode.com/photos'; // URL de la API
 
 // Obtener una referencia al elemento <img> en tu HTML
 const imgElement = document.getElementById('apiimg');

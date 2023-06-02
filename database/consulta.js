@@ -5,19 +5,17 @@ const path = require('path');
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-//var socket = io();
 
 //modulo de conexión a DB
 const connection = require('./db');
-//const connection = require('');
 
 var sensor = '';
 //var result = {};
-
+/*
 console.log("PRUEBA CONSULTA");
 console.log(sensor);
 //console.log(result);
-
+*/
 io.on('connection', (socket) => {
     clientState = true;
     DataPrint(socket);
@@ -32,10 +30,10 @@ io.on('connection', (socket) => {
         console.log("Valor del sensor en la coneccion: "+sensor);
     });
 })
-
+/*
 console.log("PRUEBA SENSOR");
 console.log("Valor del sensor: "+sensor);
-
+*/
 connection.query('SELECT '+
 'sensor.*, minerales.`Nnitrogeno`, minerales.`Pfosforo`, minerales.`Kpotasio`, minerales.`MgMagnesio` '+
 'FROM '+
@@ -46,9 +44,11 @@ connection.query('SELECT '+
         console.log(error);
     }else{
         //result = results;
+        /*
         console.log("");
         console.log("Resultados de la consulta:");
         console.log(results);
+        */
         app.get("/dashboard", (req, res) => {
             res.render('dashboard', {results});
         })
